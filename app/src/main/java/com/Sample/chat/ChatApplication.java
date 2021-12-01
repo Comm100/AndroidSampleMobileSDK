@@ -7,6 +7,11 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import com.comm100.livechat.VisitorClientInterface;
+import com.comm100.livechat.model.CustomField;
+import com.comm100.livechat.model.SystemField;
+import com.comm100.livechat.view.VisitorClientCustomJS;
+
+import java.util.Vector;
 
 import cn.jpush.android.api.BasicPushNotificationBuilder;
 import cn.jpush.android.api.JPushInterface;
@@ -21,8 +26,13 @@ public class ChatApplication extends Application {
 
     public void onCreate(){
         super.onCreate();
-
-        VisitorClientInterface.setChatUrl("https://chatserver.comm100.com/chatWindow.aspx?planId=260&siteId=223747");
+        Vector<SystemField> systemFields = new Vector<SystemField>();
+        systemFields.add(new SystemField("name","Frank"));
+        systemFields.add(new SystemField("email","comm100@comm100.com"));
+        Vector<CustomField> customFields = new Vector<CustomField>();
+        VisitorClientInterface.setChatUrl("https://vue.comm100.com/visitorside/html/chatwindow.300e735de7efe4da16c20ea2575fedab59802d7e.html?siteId=10100000&planId=0bb92c61-8cb3-4330-8558-492dcfec7309");
+        VisitorClientInterface.fillPreChat(systemFields,customFields,false);
+        String jsString = VisitorClientCustomJS.buildPrechatfillingScript(systemFields,customFields,false);
 
         JPushInterface.setDebugMode(true);
         JPushInterface.init(this);

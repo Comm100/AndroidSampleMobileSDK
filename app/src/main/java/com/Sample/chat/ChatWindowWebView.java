@@ -2,6 +2,12 @@ import android.content.Context;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import com.comm100.livechat.model.CustomField;
+import com.comm100.livechat.model.SystemField;
+import com.comm100.livechat.view.VisitorClientCustomJS;
+
+import java.util.Vector;
+
 public class ChatWindowWebView extends WebView {
 
     public static final String kWebviewHandler = "webviewHandler";
@@ -21,6 +27,9 @@ public class ChatWindowWebView extends WebView {
         @Override
         public void onPageFinished(WebView view, String url)
         {
+
+
+
             super.onPageFinished(view, url);
 
             StringBuilder scriptBuilder = new StringBuilder();
@@ -30,6 +39,7 @@ public class ChatWindowWebView extends WebView {
             scriptBuilder.append(String.format("window.%s.onCloseWindow();", kWebviewHandler));
             scriptBuilder.append("});");
             scriptBuilder.append("}");
+
             view.loadUrl("javascript:" + scriptBuilder.toString());
         }
     };
